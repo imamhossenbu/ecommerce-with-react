@@ -1,9 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { Star, Minus, Plus, ZoomIn, Heart } from 'lucide-react';
 import { getProductById, getProducts } from '../../../api/services'; 
 import toast from 'react-hot-toast';
 import ProductCard from '../../../components/ui/ProductCard'
+import ProductReviews from './ProductReviews';
+import ProductSkeleton from '../../../components/skeletons/ProductSkeleton';
+import { CartContext } from '../../../context/cartContext';
+
 
 export default function ProductDetailsView() {
   const { id } = useParams();
@@ -12,6 +16,7 @@ export default function ProductDetailsView() {
   const [quantity, setQuantity] = useState(1);
   const [loading, setLoading] = useState(true);
   const [relatedProducts, setRelatedProducts] = useState([]);
+  const { addToCart } = useContext(CartContext);
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -51,7 +56,25 @@ export default function ProductDetailsView() {
   }
 }, [product, id]);
 
-  if (loading) return <div className="min-h-screen flex items-center justify-center">Loading...</div>;
+
+const handleAddToCart = (e) => {
+  if (e) {
+    e.preventDefault();
+    e.stopPropagation();
+  }
+  
+  if (product) {
+    addToCart(product, quantity); 
+  }
+};
+
+
+
+
+  if (loading) return (
+<ProductSkeleton/>
+  );
+
   if (!product) return <div className="min-h-screen flex items-center justify-center">No Product Found</div>;
 
   const allImages = [product.thumbnail, ...(product.images || [])];
@@ -139,7 +162,9 @@ export default function ProductDetailsView() {
               <button onClick={() => setQuantity(v => v + 1)} className="p-3 hover:bg-gray-100"><Plus size={18} /></button>
             </div>
 
-            <button className="flex-1 bg-black text-white h-[52px] rounded-md font-bold uppercase tracking-wider hover:bg-neutral-800 transition-all flex items-center justify-center gap-2 group">
+            <button type='button'
+            onClick={handleAddToCart}
+            className="flex-1 bg-black cursor-pointer text-white h-[52px] rounded-md font-bold uppercase tracking-wider hover:bg-neutral-800 transition-all flex items-center justify-center gap-2 group">
               Add to Cart <ArrowRight className="group-hover:translate-x-1 transition-transform" />
             </button>
 
@@ -178,6 +203,12 @@ export default function ProductDetailsView() {
     )}
   </div>
 </div>
+
+<ProductReviews 
+      productId={product._id} 
+      avgRating={product.avgRating} 
+      totalReviews={product.totalReviews} 
+    />
     </section>
   );
 }

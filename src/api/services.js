@@ -56,3 +56,27 @@ export const getProductReviews = async (productId) => {
   const response = await axiosInstance.get(`/reviews/get-reviews/${productId}`);
   return response.data;
 };
+
+
+export const addReview = async (reviewData) => {
+  const response = await axiosInstance.post('/reviews/add-review', reviewData);
+  return response.data;
+};
+
+
+export const createCheckoutSession = async (paymentData) => {
+  const response = await axiosInstance.post('/payment/create-checkout-session', paymentData);
+  return response.data; 
+};
+
+
+export const getOrderDetails = async (tranId) => {
+  const response = await axiosInstance.get(`/payment/order-details/${tranId}`);
+  return response.data;
+};
+
+
+export const getUserOrders = async () => {
+  const response = await axiosInstance.get('/payment/my-orders');
+  return response.data;
+};

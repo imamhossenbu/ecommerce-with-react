@@ -21,6 +21,7 @@
     "react-hot-toast": "^2.6.0",
     "react-loading-skeleton": "^3.5.0",
     "react-router-dom": "^7.13.1",
+    "react-simple-star-rating": "^5.1.7",
     "sort-by": "^1.2.0",
     "swiper": "^12.1.2",
     "swiper-react": "^1.0.0",

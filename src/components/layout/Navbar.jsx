@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Search, User, ShoppingBag, ChevronDown, Menu, X, UserCircle, Package, LogOut } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
+import {  AnimatePresence } from 'framer-motion';
 import img from "../../assets/logo.png"
 import AuthContext from '../../context/AuthContext';
 import { Link } from 'react-router-dom';
+import { CartContext } from '../../context/cartContext';
 
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -12,6 +13,10 @@ export default function Navbar() {
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
   const [openMobileDropdown, setOpenMobileDropdown] = useState(null);
   const {user,logout} = useContext(AuthContext)
+  const { cartItems } = useContext(CartContext);
+
+
+  const totalCartItems = cartItems.reduce((total, item) => total + item.quantity, 0);
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 20);
@@ -137,10 +142,14 @@ export default function Navbar() {
           </div>
 
           {/* Cart */}
-          <a href="/cart" className="hover:text-accent relative pt-1">
+          <Link to="/cart" className="hover:text-accent relative pt-1 group">
             <ShoppingBag size={20} strokeWidth={1.5} />
-            <span className="absolute -top-1 -right-2 bg-accent text-white-custom text-[9px] font-bold w-4 h-4 rounded-full flex items-center justify-center">0</span>
-          </a>
+            {totalCartItems > 0 && (
+              <span className="absolute -top-1 -right-2 bg-accent text-white text-[9px] font-bold w-4 h-4 rounded-full flex items-center justify-center animate-in fade-in zoom-in duration-300">
+                {totalCartItems}
+              </span>
+            )}
+          </Link>
         </div>
 
         {/* MOBILE SEARCH BAR */}

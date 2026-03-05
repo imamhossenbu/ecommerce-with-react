@@ -1,16 +1,32 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { ShoppingBag, Star } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { CartContext } from '../../context/cartContext';
+import toast from 'react-hot-toast'; // অপশনাল: সাকসেস মেসেজের জন্য
 
 export default function ProductCard({ product }) {
-  const {_id, thumbnail, name, categoryID, salePrice, regularPrice } = product;
+  const { _id, thumbnail, name, categoryID, salePrice, regularPrice } = product;
   const navigate = useNavigate();
+  const { addToCart } = useContext(CartContext);
+
+  const handleAddToCart = (e) => {
+    e.preventDefault(); 
+    e.stopPropagation(); 
+    
+
+    addToCart(product, 1); 
+    
+
+    toast.success(`${name} added to cart!`, {
+      style: { fontSize: '12px', fontWeight: 'bold' }
+    });
+  };
 
   return (
     <div
-    onClick={() => navigate(`/product/${_id}`)}
-    className="product-card group cursor-pointer">
-      {/* Image Container with Add to Cart Overlay */}
+      onClick={() => navigate(`/product/${_id}`)}
+      className="product-card group cursor-pointer"
+    >
       <div className="img-box relative overflow-hidden bg-[#F6F6F6] aspect-square">
         <img 
           src={thumbnail} 
@@ -18,16 +34,20 @@ export default function ProductCard({ product }) {
           className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
         />
         
-        {/* Hover Overlay Button */}
-        <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-black/5">
-          <button className="bg-white text-dark px-6 py-2.5 rounded-sm flex items-center gap-2 text-[13px] font-semibold shadow-xl transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300 hover:bg-accent hover:text-white">
+        {/* Overlay Button */}
+        <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-black/5 z-10">
+          <button
+            type="button"
+            onClick={handleAddToCart} 
+            className="bg-white text-dark px-6 py-2.5 rounded-sm flex items-center gap-2 text-[13px] font-semibold shadow-xl transform translate-y-4 group-hover:translate-y-0 transition-all duration-300 hover:bg-black hover:text-white pointer-events-auto"
+          >
             <ShoppingBag size={16} />
             Add to Cart
           </button>
         </div>
       </div>
 
-      {/* Product Details */}
+
       <div className="mt-4 space-y-1">
         <p className="text-[12px] text-muted uppercase tracking-wider">
           {categoryID?.name || "Serums"}
@@ -43,7 +63,6 @@ export default function ProductCard({ product }) {
           )}
         </div>
 
-        {/* Rating Mockup */}
         <div className="flex items-center gap-1 mt-1">
           <Star size={12} className="fill-accent text-accent" />
           <span className="text-[11px] font-bold text-primary">4.9</span>
