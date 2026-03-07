@@ -15,6 +15,8 @@ import PaymentSuccess from "./features/success/pages/PaymentSuccess"
 import PaymentCancel from "./features/cancel/pages/PaymentCancel"
 import AboutPage from "./features/about/pages/AboutPage"
 import ContactPage from "./features/contact/pages/ContactPage"
+import MyAccountPage from "./features/profile/pages/MyAccountPage"
+import OrderDetailsPage from "./features/order-details/pages/OrderDetailsPage"
 
 
 export const router = createBrowserRouter([
@@ -44,6 +46,14 @@ export const router = createBrowserRouter([
       {
         path:'contact',
         element:<ContactPage/>
+      },
+      {
+        path:'profile',
+        element:<MyAccountPage/>
+      },
+      {
+        path:'order-details/:orderId',
+        element:<OrderDetailsPage/>
       }
     ],
   },

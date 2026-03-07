@@ -13,21 +13,24 @@ export default function Login() {
   const [formData, setFormData] = useState({ email: '', password: '' });
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    const loadingToast = toast.loading('Signing in...');
+  e.preventDefault();
+  const loadingToast = toast.loading('Signing in...');
+  
+  try {
+    const res = await loginUser(formData);
     
-    try {
-      const res = await loginUser(formData);
+    if (res.success) {
+      const userData = res.data;
+      const userToken = res.data.token; 
+      login(userData, userToken); 
       
-      if (res.success) {
-        login(res.data, res.token); 
-        toast.success('Welcome back!', { id: loadingToast });
-        navigate('/'); 
-      }
-    } catch (err) {
-      toast.error(err.response?.data?.message || 'Invalid email or password', { id: loadingToast });
+      toast.success('Welcome back!', { id: loadingToast });
+      navigate('/'); 
     }
-  };
+  } catch (err) {
+    toast.error(err.response?.data?.message || 'Invalid email or password', { id: loadingToast });
+  }
+};
 
   return (
     <section className="min-h-[70vh] bg-[#F5E6D3] flex flex-col items-center justify-center p-4">

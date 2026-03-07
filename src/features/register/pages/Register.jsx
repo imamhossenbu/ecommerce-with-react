@@ -144,7 +144,7 @@ export default function Register() {
 
       {/* Login Redirect */}
       <p className="mt-8 text-[15px] text-neutral-800">
-        Already have an account? <Link to="/login" className="font-bold hover:underline">Sign in</Link>
+        Already have an account? <Link to="/signin" className="font-bold hover:underline">Sign in</Link>
       </p>
     </section>
   );

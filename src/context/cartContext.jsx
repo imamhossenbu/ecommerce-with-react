@@ -28,7 +28,7 @@ const addToCart = (product, quantity) => {
     return [...prevItems, { ...product, quantity }];
   });
 };
-
+console.log(cartItems)
   const removeFromCart = (id) => {
     setCartItems(cartItems.filter((item) => item._id !== id));
     toast.error("Removed from cart");

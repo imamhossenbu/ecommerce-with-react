@@ -50,17 +50,27 @@ export default function Checkout() {
     setLoading(true);
 
     try {
-      const paymentData = {
-        customerInfo: formData,
-        items: cartItems,
-        totalAmount: total,
-        shippingFee: selectedShipping
-      };
 
+      const formattedItems = cartItems.map(item => ({
+      productID: item._id, 
+        name: item.name,
+        quantity: item.quantity,
+        price: item.salePrice, 
+        image: item.thumbnail
+    }));
+
+
+
+
+     const paymentData = {
+      customerInfo: formData,
+      items: formattedItems, 
+      totalAmount: total,
+      shippingFee: selectedShipping
+    };
       const res = await createCheckoutSession(paymentData);
       
       if (res.success && res.url) {
-        // SSLCommerz গেটওয়েতে রিডাইরেক্ট
         window.location.replace(res.url);
       } else {
         toast.error(res.message || "Failed to initiate payment");

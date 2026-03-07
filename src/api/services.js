@@ -77,6 +77,28 @@ export const getOrderDetails = async (tranId) => {
 
 
 export const getUserOrders = async () => {
-  const response = await axiosInstance.get('/payment/my-orders');
+  try {
+    const response = await axiosInstance.get('/payment/my-orders');
+    return response.data; 
+  } catch (error) {
+    console.error("API Error:", error.response?.data || error.message);
+    throw error;
+  }
+};
+
+export const updateProfile = async (formData) => {
+  const response = await axiosInstance.put('/auth/update-profile', formData, {
+    headers: { 'Content-Type': 'multipart/form-data' }
+  });
+  return response.data;
+};
+
+export const changePassword = async (passwordData) => {
+  const response = await axiosInstance.post('/auth/change-password', passwordData);
+  return response.data;
+};
+
+export const getOrderById = async (orderId) => {
+  const response = await axiosInstance.get(`/payment/order/${orderId}`);
   return response.data;
 };

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Search, User, ShoppingBag, ChevronDown, Menu, X, UserCircle, Package, LogOut } from 'lucide-react';
-import {  AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import img from "../../assets/logo.png"
 import AuthContext from '../../context/AuthContext';
 import { Link } from 'react-router-dom';
@@ -120,7 +120,7 @@ export default function Navbar() {
                       <Link to="/profile" className="flex items-center gap-3 px-5 py-2.5 text-nav text-primary hover:bg-gray-50 transition-all">
                         <UserCircle size={16} /> My Account
                       </Link>
-                      <Link to="/orders" className="flex items-center gap-3 px-5 py-2.5 text-nav text-primary hover:bg-gray-50 transition-all">
+                      <Link to="/profile" className="flex items-center gap-3 px-5 py-2.5 text-nav text-primary hover:bg-gray-50 transition-all">
                         <Package size={16} /> Order History
                       </Link>
                       <button 
