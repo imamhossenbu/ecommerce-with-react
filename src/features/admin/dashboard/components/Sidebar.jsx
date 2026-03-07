@@ -17,6 +17,7 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
   const menuItems = [
     { name: 'Overview', icon: LayoutDashboard, path: '/admin/dashboard' },
     { name: 'Products', icon: Package, path: '/admin/products' },
+    { name: 'Categories', icon: Package, path: '/admin/categories' },
     { name: 'Orders', icon: ShoppingBag, path: '/admin/orders' },
     { name: 'Customers', icon: Users, path: '/admin/customers' },
     { name: 'Settings', icon: Settings, path: '/admin/settings' },
@@ -32,7 +33,6 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
         />
       )}
 
-      {/* ব্যাকগ্রাউন্ড কালার #ffeef3 সেট করা হয়েছে */}
       <aside className={`fixed top-0 left-0 h-full w-64 bg-[#ffeef3] border-r border-pink-100/50 flex flex-col z-50 transition-transform duration-300 lg:translate-x-0 ${
         isOpen ? 'translate-x-0' : '-translate-x-full'
       }`}>
