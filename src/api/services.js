@@ -102,3 +102,66 @@ export const getOrderById = async (orderId) => {
   const response = await axiosInstance.get(`/payment/order/${orderId}`);
   return response.data;
 };
+
+
+
+// Admin Stats API
+export const getAdminStats = async () => {
+  const response = await axiosInstance.get('/admin/stats');
+  console.log(response.data.data);
+  return response.data.data;
+};
+
+
+export const addProduct = (data) => axiosInstance.post('/create-product', data);
+
+
+export const updateProduct = (id, data) => axiosInstance.put(`/products/${id}`, data);
+export const deleteProduct = (id) => axiosInstance.delete(`/products/${id}`);
+
+
+
+export const addProductImage = async (formData) => {
+  const response = await axiosInstance.post('/upload-image', formData, {
+    headers: { 'Content-Type': 'multipart/form-data' }
+  });
+  return response.data;
+};
+
+export const getAllOrders = async (params = {}) => {
+  try {
+    const response = await axiosInstance.get('/payment/all-orders', { params });
+    return response.data;
+  } catch (error) {
+    console.error("GetAllOrders API Error:", error.response?.data || error.message);
+    throw error;
+  }
+};
+
+
+export const updateOrderStatus = async (orderId, status) => {
+  const response = await axiosInstance.patch(`/payment/update-order-status/${orderId}`, { status });
+  return response.data;
+};
+
+
+export const getManageCustomers = async (params = {}) => {
+  const response = await axiosInstance.get('/admin/manage-customers', { params });
+  return response.data;
+};
+
+
+export const deleteUser = async (id) => {
+    const response = await axiosInstance.delete(`/admin/delete-user/${id}`);
+    return response.data;
+};
+
+export const updateProfileByAdmin = async (data) => {
+  const response = await axiosInstance.patch(`/admin/update-profile`, data);
+  return response.data;
+};
+
+export const updateAdminSettings = async (settingsData) => {
+  const response = await axiosInstance.put('/admin/update-settings', settingsData);
+  return response.data;
+};

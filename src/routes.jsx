@@ -17,6 +17,12 @@ import AboutPage from "./features/about/pages/AboutPage"
 import ContactPage from "./features/contact/pages/ContactPage"
 import MyAccountPage from "./features/profile/pages/MyAccountPage"
 import OrderDetailsPage from "./features/order-details/pages/OrderDetailsPage"
+import AdminLayout from "./components/layout/AdminLayout"
+import AdminDashboard from "./features/admin/dashboard/pages/adminDashboard"
+import AdminProducts from "./features/admin/products/pages/AdminProducts"
+import AdminOrders from "./features/admin/orders/components/pages/AdminOrders"
+import ManageCustomers from "./features/admin/customers/pages/ManageCustomers"
+import Settings from "./features/admin/settings/pages/Settings"
 
 
 export const router = createBrowserRouter([
@@ -54,6 +60,33 @@ export const router = createBrowserRouter([
       {
         path:'order-details/:orderId',
         element:<OrderDetailsPage/>
+      },
+    ],
+
+  },
+  {
+    path: "/admin",
+    element: <AdminLayout />, 
+    children: [
+      {
+        path: 'dashboard', 
+       element:<AdminDashboard/>
+      },
+      {
+        path:'products',
+        element:<AdminProducts/>
+      },
+      {
+        path:'orders',
+        element:<AdminOrders/>
+      },
+      {
+        path:'customers',
+        element:<ManageCustomers/>
+      },
+      {
+        path:'settings',
+        element:<Settings/>
       }
     ],
   },
