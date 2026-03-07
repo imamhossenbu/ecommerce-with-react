@@ -24,6 +24,8 @@ import AdminOrders from "./features/admin/orders/components/pages/AdminOrders"
 import ManageCustomers from "./features/admin/customers/pages/ManageCustomers"
 import Settings from "./features/admin/settings/pages/Settings"
 import Categories from "./features/admin/categories/pages/Categories"
+import ForgetPassword from "./features/forget-password/pages/ForgetPassword"
+import ResetPassword from "./features/reset-password/pages/ResetPassword"
 
 
 export const router = createBrowserRouter([
@@ -60,8 +62,16 @@ export const router = createBrowserRouter([
       },
       {
         path:'order-details/:orderId',
-        element:<OrderDetailsPage/>
+        element:<OrderDetailsPage/>,
       },
+      {
+        path:'forget-password',
+        element:<ForgetPassword/>
+      },
+      {
+        path:'reset-password/:token',
+        element:<ResetPassword/>
+      }
     ],
 
   },

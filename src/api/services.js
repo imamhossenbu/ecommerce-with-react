@@ -186,3 +186,14 @@ export const updateAdminSettings = async (settingsData) => {
   const response = await axiosInstance.put('/admin/update-settings', settingsData);
   return response.data;
 };
+
+export const forgetPassword = async (email) => {
+  const response = await axiosInstance.post('/auth/forget-password', { email });
+  return response.data;
+};
+
+
+export const resetPassword = async (token, password) => {
+  const response = await axiosInstance.put(`/auth/reset-password/${token}`, { password });
+  return response.data;
+};
