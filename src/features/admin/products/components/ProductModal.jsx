@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { X, Save, Image as ImageIcon, Plus, Loader2, Trash2, ChevronDown, CheckCircle2 } from 'lucide-react';
 import { addProduct, updateProduct, getCategories, addProductImage } from '../../../../api/services'; 
+import toast from 'react-hot-toast';
 
 const ProductModal = ({ isOpen, onClose, product, refresh }) => {
   const [formData, setFormData] = useState({
@@ -68,7 +69,7 @@ const ProductModal = ({ isOpen, onClose, product, refresh }) => {
       const res = await addProductImage(data);
       setThumbnailPreview(res.url);
     } catch (err) {
-      alert("Thumbnail upload failed!");
+      toast.error("Thumbnail upload failed!");
     } finally {
       setUploadingImg(false);
     }
@@ -88,7 +89,7 @@ const ProductModal = ({ isOpen, onClose, product, refresh }) => {
       const newUrls = await Promise.all(uploadPromises);
       setGalleryPreviews(prev => [...prev, ...newUrls]);
     } catch (err) {
-      alert("Some images failed to upload!");
+      toast.error("Some images failed to upload!");
     } finally {
       setUploadingImg(false);
     }
@@ -102,7 +103,7 @@ const ProductModal = ({ isOpen, onClose, product, refresh }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!thumbnailPreview) return alert("Please upload a thumbnail!");
+    if (!thumbnailPreview) return toast.error("Please upload a thumbnail!");
     
     setLoading(true);
     try {
@@ -124,10 +125,10 @@ const ProductModal = ({ isOpen, onClose, product, refresh }) => {
 
       refresh();
       onClose();
-      alert("Product saved successfully!");
+      toast.success("Product saved successfully!");
     } catch (err) {
       console.error("Submit error:", err);
-      alert(err.response?.data?.message || "Operation failed!");
+      toast.error(err.response?.data?.message || "Operation failed!");
     } finally {
       setLoading(false);
     }

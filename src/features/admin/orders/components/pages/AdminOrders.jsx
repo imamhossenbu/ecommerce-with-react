@@ -24,7 +24,6 @@ const AdminOrders = () => {
     revenue: 0
   });
 
-  // ১. ডাটা ফেচিং লজিক (তোমার API Response অনুযায়ী)
   const fetchOrders = useCallback(async () => {
     try {
       setLoading(true);
@@ -63,14 +62,14 @@ const AdminOrders = () => {
     return () => clearTimeout(delayDebounce);
   }, [fetchOrders]);
 
-  // ২. স্ট্যাটাস আপডেট লজিক
+
   const handleStatusChange = async (orderId, newStatus) => {
     try {
       setUpdatingId(orderId);
       const res = await updateOrderStatus(orderId, newStatus);
       if (res.success) {
         toast.success(`Order marked as ${newStatus}`);
-        fetchOrders(); // রিফ্রেশ ডাটা
+        fetchOrders(); 
       }
     } catch (error) {
       toast.error("Failed to update status");

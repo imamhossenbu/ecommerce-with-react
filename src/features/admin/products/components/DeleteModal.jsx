@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { AlertCircle, Trash2, X } from 'lucide-react';
 import axiosInstance from '../../../../api/axiosInstance';
+import toast from 'react-hot-toast';
 
 const DeleteModal = ({ isOpen, onClose, product, refresh }) => {
   const [deleting, setDeleting] = useState(false);
@@ -13,7 +14,7 @@ const DeleteModal = ({ isOpen, onClose, product, refresh }) => {
       onClose();
     } catch (err) {
       console.error(err);
-      alert("Failed to delete product");
+      toast.error("Failed to delete product");
     } finally {
       setDeleting(false);
     }

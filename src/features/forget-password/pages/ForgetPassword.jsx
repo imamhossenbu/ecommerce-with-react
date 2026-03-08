@@ -14,10 +14,10 @@ const handleSubmit = async (e) => {
     try {
       const res = await forgetPassword(email);
       if (res.success) {
-        toast.success("পাসওয়ার্ড রিসেট লিঙ্ক আপনার ইমেলে পাঠানো হয়েছে!");
+        toast.success("Password reset link send to your email");
       }
     } catch (err) {
-      toast.error(err.response?.data?.message || "ইউজার পাওয়া যায়নি");
+      toast.error(err.response?.data?.message || "User not found");
     } finally {
       setLoading(false);
     }
